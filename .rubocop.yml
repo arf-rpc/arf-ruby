@@ -1,0 +1,56 @@
+AllCops:
+  TargetRubyVersion: 3.2
+  NewCops: enable
+  SuggestExtensions: false
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+
+Style/StringLiteralsInInterpolation:
+  EnforcedStyle: double_quotes
+
+Metrics/BlockLength:
+  Exclude:
+    - spec/**/*
+    - "*.gemspec"
+
+Metrics/MethodLength:
+  Enabled: false
+
+Metrics/ClassLength:
+  Enabled: false
+
+Layout/MultilineMethodCallIndentation:
+  EnforcedStyle: indented
+
+Style/Documentation:
+  Enabled: false
+
+Metrics/AbcSize:
+  Enabled: false
+
+Metrics/CyclomaticComplexity:
+  Enabled: false
+
+Metrics/PerceivedComplexity:
+  Enabled: false
+
+Naming/MethodParameterName:
+  Enabled: false
+
+Lint/RescueException:
+  Enabled: false
+
+Metrics/ParameterLists:
+  Exclude:
+    - lib/arf/rpc/client_base.rb
+
+Naming/PredicateName:
+  Exclude:
+    - lib/arf/rpc/base_message.rb
+
+Lint/DuplicateBranch:
+  Exclude:
+    - lib/arf/wire/stream/state.rb
+    - lib/arf/proto/encoder.rb
+    - lib/arf/rpc/struct.rb
