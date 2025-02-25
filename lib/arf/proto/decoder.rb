@@ -23,8 +23,6 @@ module Arf
         decode_map(header, io)
       when TYPE_STRUCT
         decode_struct(header, io)
-      when TYPE_UNION
-        decode_union(header, io)
       end
     end
   end

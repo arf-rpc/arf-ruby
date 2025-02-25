@@ -29,7 +29,6 @@ RSpec.describe "Arf::Proto::Struct" do
       o: %w[hello world],
       p: "ptr string",
       r: { a: "SubStruct value" },
-      s: { v: 64 },
       w: { test: { a: "substruct in map" } },
       x: [{ a: "substruct in array 1" }, { a: "substruct in array 2" }]
     )

@@ -20,20 +20,11 @@ class SampleStruct < Arf::RPC::Struct
   field 15,     :p, :string, optional: true
   field 16,     :q, :bool, optional: true
   field 17,     :r, "SubStruct"
-  field :union, :s, "SampleStructS" # s, t, u, v are here
-  field 21,     :w, MapType[:string, "SubStruct"].bind(self)
-  field 22,     :x, ArrayType["SubStruct"].bind(self)
+  field 18,     :w, MapType[:string, "SubStruct"].bind(self)
+  field 19,     :x, ArrayType["SubStruct"].bind(self)
 
   class SubStruct < Arf::RPC::Struct
     arf_struct_id "org.example.test/SubStruct"
     field 0, :a, :string
-  end
-
-  class SampleStructS < Arf::RPC::Struct
-    union!
-
-    field 18, :t, :string
-    field 19, :u, :bool
-    field 20, :v, :uint64
   end
 end

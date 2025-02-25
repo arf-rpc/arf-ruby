@@ -11,7 +11,6 @@ require_relative "proto/string"
 require_relative "proto/array"
 require_relative "proto/map"
 require_relative "proto/struct"
-require_relative "proto/union"
 
 require_relative "proto/encoder"
 require_relative "proto/decoder"

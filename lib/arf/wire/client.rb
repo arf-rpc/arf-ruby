@@ -7,8 +7,6 @@ module Arf
         dispatch_frame(ConfigurationFrame) do |fr|
           compression = Arf.config.client_compression
           case compression
-          when :brotli
-            fr.compression_brotli!
           when :gzip
             fr.compression_gzip!
           else

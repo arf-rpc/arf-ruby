@@ -99,37 +99,19 @@ module Arf
           end
 
           v = _coerce(v, type)
-
-          instance_variable_set("@__arf_union_set_id", id) if union? && !@skip_union_setter
           instance_variable_set("@#{name}", v)
         end
       end
 
       def self.all_fields
-        @all_fields ||= @fields
-          .map do |v|
-            next v unless v[:id] == :union
-
-            find_type(v[:type])
-              .all_fields
-              .map { _1.merge(via: v[:name]) }
-          end
-          .flatten
+        @fields
       end
 
       def self.fields = @fields || []
       def self.field_by_id(id) = @fields.find { _1[:id] == id }
       def self.field_by_name(name) = name.to_s.then { |n| @fields.find { _1[:name] == n } }
 
-      def self.union!
-        @union = true
-        attr_reader(:__arf_union_set_id)
-      end
-
-      def self.union? = @union || false
-
       def arf_struct_id = self.class.arf_struct_id
-      def union? = self.class.union?
 
       def initialize(**kwargs)
         cls = self.class
@@ -141,22 +123,12 @@ module Arf
           send("#{k}=", v)
         end
 
-        @skip_union_setter = true
         # Initialize missing variables
         cls.fields.each do |f|
           next if f[:optional]
 
           send("#{f[:name]}=", cls.default_for_type(f[:type])) if instance_variable_get("@#{f[:name]}").nil?
         end
-
-        if union? && __arf_union_set_id.nil?
-          @skip_union_setter = false
-          # Set the first field
-          f = cls.fields.first
-          send("#{f[:name]}=", cls.default_for_type(f[:type]))
-        end
-      ensure
-        @skip_union_setter = false
       end
 
       def _coerce(value, type)
@@ -191,12 +163,6 @@ module Arf
             puts "WARNING: Skipping field ID #{id} without matching ID on target type #{self.class.name}"
             next
           end
-          if meta[:via]
-            union_field = self.class.all_fields.find { _1[:id] == value[:id] }
-            instance_variable_get("@#{meta[:via]}")
-              .send("#{union_field[:name]}=", value[:value])
-            next
-          end
 
           next if meta[:optional] && value.nil?
 
@@ -208,25 +174,9 @@ module Arf
       def ==(other)
         return false unless other.is_a? self.class
 
-        return eq_union(other) if union?
-
-        eq_struct(other)
-      end
-
-      def eq_struct(other)
         self.class.fields.each do |v|
           return false unless send(v[:name]) == other.send(v[:name])
         end
-        true
-      end
-
-      def eq_union(other)
-        return false unless other.__arf_union_set_id == __arf_union_set_id
-
-        self.class.fields.each do |v|
-          return false if instance_variable_get("@#{v[:name]}") != other.instance_variable_get("@#{v[:name]}")
-        end
-
         true
       end
 
@@ -241,11 +191,6 @@ module Arf
       end
 
       def to_h
-        if union?
-          set = self.class.fields.find { _1[:id] == __arf_union_set_id }
-          return { set[:name] => hashify(instance_variable_get("@#{set[:name]}")) }
-        end
-
         self.class.fields
           .to_h { |f| [f[:name], hashify(instance_variable_get("@#{f[:name]}"))] }
           .compact

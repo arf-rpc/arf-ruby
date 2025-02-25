@@ -45,7 +45,7 @@ RSpec.shared_examples "a frame" do
       expect(decoded).to eq decoded
     end
 
-    %i[gzip brotli].each do |comp|
+    %i[gzip].each do |comp|
       it "encodes and decodes from a frame with #{comp} compression" do
         data = rt_data.to_frame.bytes(comp)
         fr = Arf::Wire::Frame.from_io(StringIO.new(data))

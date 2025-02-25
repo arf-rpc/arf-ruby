@@ -33,7 +33,6 @@ Gem::Specification.new do |spec|
   spec.executables = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
-  spec.add_dependency "brotli", "~> 0.6.0"
   spec.add_dependency "concurrent-ruby", "~> 1.3"
   spec.add_dependency "logrb", "~> 0.1.5"
   spec.add_dependency "nio4r", "~> 2.7"

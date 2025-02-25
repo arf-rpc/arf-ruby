@@ -64,7 +64,6 @@ module ContactsImpl
       cont[:company] = c.company
       cont[:emails] = c.emails
       cont[:telephones] = c.telephones
-      cont[:social_handle] = c.social_handle
       cont[:additional_info] = c.additional_info
       cont.compact!
     end

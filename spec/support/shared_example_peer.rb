@@ -7,8 +7,6 @@ RSpec.shared_examples "a peer" do |compression_value|
     compr = compression
     dispatch_frame Arf::Wire::ConfigurationFrame do |fr|
       case compr
-      when :brotli
-        fr.compression_brotli!
       when :gzip
         fr.compression_gzip!
       end
@@ -20,8 +18,6 @@ RSpec.shared_examples "a peer" do |compression_value|
     expect(subject).to send_frame(Arf::Wire::ConfigurationFrame) do |fr|
       expect(fr).to be_ack
       case compr
-      when :brotli
-        expect(fr).to be_compression_brotli
       when :gzip
         expect(fr).to be_compression_gzip
       end

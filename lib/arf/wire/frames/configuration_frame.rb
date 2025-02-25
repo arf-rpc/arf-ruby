@@ -4,9 +4,8 @@ module Arf
   module Wire
     class ConfigurationFrame < BaseFrame
       frame_kind :configuration
-      define_flag :compression_gzip, 0
-      define_flag :compression_brotli, 1
-      define_flag :ack, 2
+      define_flag :ack, 0
+      define_flag :compression_gzip, 1
       attr_accessor :max_concurrent_streams
 
       def from_frame(frame)

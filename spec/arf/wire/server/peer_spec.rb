@@ -64,9 +64,5 @@ RSpec.describe Arf::Wire::Server::Peer do
     context "with gzip compression" do
       it_behaves_like "a peer", :gzip
     end
-
-    context "with brotli compression" do
-      it_behaves_like "a peer", :brotli
-    end
   end
 end

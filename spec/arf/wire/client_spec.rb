@@ -12,5 +12,4 @@ RSpec.describe Arf::Wire::Client do
 
   context("without compression") { it_behaves_like "a client", :none }
   context("with gzip") { it_behaves_like "a client", :gzip }
-  context("with brotli") { it_behaves_like "a client", :brotli }
 end

@@ -11,7 +11,6 @@ module Arf
     TYPE_ARRAY   = 0b0110
     TYPE_MAP     = 0b0111
     TYPE_STRUCT  = 0b1000
-    TYPE_UNION   = 0b1001
 
     ALL_PRIMITIVES = [
       TYPE_VOID,
@@ -23,7 +22,6 @@ module Arf
       TYPE_ARRAY,
       TYPE_MAP,
       TYPE_STRUCT,
-      TYPE_UNION
     ].freeze
 
     TYPE_NAME = {
@@ -36,7 +34,6 @@ module Arf
       TYPE_ARRAY => "Array",
       TYPE_MAP => "Map",
       TYPE_STRUCT => "Struct",
-      TYPE_UNION => "Union"
     }.freeze
 
     SIMPLE_PRIMITIVES = {

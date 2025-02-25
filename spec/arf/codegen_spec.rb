@@ -40,7 +40,6 @@ RSpec.describe "Contacts.arf" do
         telephones: [
           { number: "555-1013", kind: :work }
         ],
-        social_handle: { linkedin_profile: "https://linked.in/d.scully" },
         additional_info: {
           DOB: "February 23, 1964"
         }
@@ -63,7 +62,6 @@ RSpec.describe "Contacts.arf" do
       contact.telephones = [
         { number: "555-1013", kind: :work }
       ]
-      contact.social_handle = { linkedin_profile: "https://linked.in/d.scully" }
       contact.additional_info = {
         DOB: "February 23, 1964"
       }
@@ -79,11 +77,6 @@ RSpec.describe "Contacts.arf" do
 
     it "hashifies a struct" do
       original.to_h
-    end
-
-    it "handles empty unions" do
-      c = Contacts::Contact.new(name: "Fefo")
-      Arf::Proto.encode(c)
     end
   end
 
@@ -112,7 +105,6 @@ RSpec.describe "Contacts.arf" do
         telephones: [
           { number: "555-1013", kind: :work }
         ],
-        social_handle: { linkedin_profile: "https://linked.in/d.scully" },
         additional_info: {
           DOB: "February 23, 1964"
         }

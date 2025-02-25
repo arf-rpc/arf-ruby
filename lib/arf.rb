@@ -8,7 +8,6 @@ require "monitor"
 Thread.abort_on_exception = true
 
 require "zlib"
-require "brotli"
 require "logrb"
 require "nio"
 require "concurrent"

@@ -6,28 +6,17 @@ module Arf
       base = v.is_a?(Class) ? v : v.class
       fields = []
       base.fields.each do |f|
-        if f[:id].is_a? Integer
-          fields << if f[:type].is_a?(Symbol) ||
-                       f[:type].is_a?(Arf::Types::ArrayType) ||
-                       f[:type].is_a?(Arf::Types::MapType)
-                      f
-                    else
-                      {
-                        id: f[:id],
-                        name: f[:name],
-                        type: base.find_type(f[:type])
-                      }
-                    end
-        else
-          raise UnsupportedNestedUnionError, "Nested unions are not supported" if base.union?
-
-          union_type = base.find_type(f[:type])
-          fields << {
-            id: union_type.fields.first[:id],
-            type: union_type,
-            name: f[:name]
-          }
-        end
+        fields << if f[:type].is_a?(Symbol) ||
+                     f[:type].is_a?(Arf::Types::ArrayType) ||
+                     f[:type].is_a?(Arf::Types::MapType)
+                    f
+                  else
+                    {
+                      id: f[:id],
+                      name: f[:name],
+                      type: base.find_type(f[:type])
+                    }
+                  end
       end
 
       fields.sort_by! { _1[:id] }
@@ -35,8 +24,6 @@ module Arf
     end
 
     def self.encode_struct(v)
-      return encode_union(v) if v.union?
-
       struct_id = v.arf_struct_id
       fields = fields_from_struct(v)
       data = []

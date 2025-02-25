@@ -30,15 +30,9 @@ module Arf
       def self.do_decompress(value) = Zlib::Inflate.inflate(value)
     end
 
-    class BrotliCompressor < BaseCompressor
-      def self.do_compress(value) = Brotli.deflate(value)
-      def self.do_decompress(value) = Brotli.inflate(value)
-    end
-
     COMPRESSOR = {
       none: NoneCompressor,
       gzip: GzipCompressor,
-      brotli: BrotliCompressor
     }.freeze
   end
 end

@@ -12,8 +12,7 @@ module Contacts
     field 3, :company, "Company", optional: true
     field 4, :emails, ArrayType[:string]
     field 5, :telephones, ArrayType["Telephone"].bind(self)
-    field :union, :social_handle, "SocialHandle"
-    field 9, :additional_info, MapType[:string, :string].bind(self)
+    field 6, :additional_info, MapType[:string, :string].bind(self)
 
     class Telephone < Arf::RPC::Struct
       arf_struct_id "org.example.contacts/contact/telephone"
@@ -26,14 +25,6 @@ module Contacts
         option home: 2
         option house: 2
       end
-    end
-
-    class SocialHandle < Arf::RPC::Struct
-      union!
-
-      field 6, :personal_website, :string
-      field 7, :linkedin_profile, :string
-      field 8, :twitter_handle, :string
     end
   end
 

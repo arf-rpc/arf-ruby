@@ -21,10 +21,7 @@ module Arf
 
           resp = ConfigurationFrame.new.tap(&:ack!)
 
-          if fr.compression_brotli?
-            @compression = :brotli
-            resp.compression_brotli!
-          elsif fr.compression_gzip?
+          if fr.compression_gzip?
             @compression = :gzip
             resp.compression_gzip!
           end
