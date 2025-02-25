@@ -2,7 +2,7 @@
 
 module Arf
   module Wire
-    FRAME_KIND_HELLO  = 0x0
+    FRAME_KIND_HELLO = 0x0
     FRAME_KIND_PING           = 0x1
     FRAME_KIND_GO_AWAY        = 0x2
     FRAME_KIND_MAKE_STREAM    = 0x3

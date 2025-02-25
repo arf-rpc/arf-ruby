@@ -21,7 +21,7 @@ module Arf
       TYPE_BYTES,
       TYPE_ARRAY,
       TYPE_MAP,
-      TYPE_STRUCT,
+      TYPE_STRUCT
     ].freeze
 
     TYPE_NAME = {
@@ -33,7 +33,7 @@ module Arf
       TYPE_BYTES => "Bytes",
       TYPE_ARRAY => "Array",
       TYPE_MAP => "Map",
-      TYPE_STRUCT => "Struct",
+      TYPE_STRUCT => "Struct"
     }.freeze
 
     SIMPLE_PRIMITIVES = {

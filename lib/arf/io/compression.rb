@@ -32,7 +32,7 @@ module Arf
 
     COMPRESSOR = {
       none: NoneCompressor,
-      gzip: GzipCompressor,
+      gzip: GzipCompressor
     }.freeze
   end
 end

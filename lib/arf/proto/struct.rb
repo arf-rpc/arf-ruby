@@ -4,19 +4,18 @@ module Arf
   module Proto
     def self.fields_from_struct(v)
       base = v.is_a?(Class) ? v : v.class
-      fields = []
-      base.fields.each do |f|
-        fields << if f[:type].is_a?(Symbol) ||
-                     f[:type].is_a?(Arf::Types::ArrayType) ||
-                     f[:type].is_a?(Arf::Types::MapType)
-                    f
-                  else
-                    {
-                      id: f[:id],
-                      name: f[:name],
-                      type: base.find_type(f[:type])
-                    }
-                  end
+      fields = base.fields.map do |f|
+        if f[:type].is_a?(Symbol) ||
+           f[:type].is_a?(Arf::Types::ArrayType) ||
+           f[:type].is_a?(Arf::Types::MapType)
+          f
+        else
+          {
+            id: f[:id],
+            name: f[:name],
+            type: base.find_type(f[:type])
+          }
+        end
       end
 
       fields.sort_by! { _1[:id] }
