@@ -16,10 +16,10 @@ module Arf
           @server.unregister_peer(@id)
         end
 
-        def handle_configuration(fr)
+        def handle_hello(fr)
           return protocol_error! if @configured
 
-          resp = ConfigurationFrame.new.tap(&:ack!)
+          resp = HelloFrame.new.tap(&:ack!)
 
           if fr.compression_gzip?
             @compression = :gzip
@@ -29,7 +29,7 @@ module Arf
           resp.max_concurrent_streams = 0 # TODO
 
           @configured = true
-          @log.debug("Configuration OK")
+          @log.debug("Hello OK")
           dispatch(resp)
         end
 

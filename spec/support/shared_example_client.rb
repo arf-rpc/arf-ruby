@@ -10,7 +10,7 @@ RSpec.shared_examples "a client" do |compression_value|
   subject { Arf.connect("127.0.0.1", 2730) }
 
   it "connects and disconnects" do
-    subject.wait_configuration
+    subject.wait_hello
     expect(subject.instance_variable_get(:@compression)).to eq compression
     subject.close
   end

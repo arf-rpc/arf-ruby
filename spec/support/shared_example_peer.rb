@@ -5,7 +5,7 @@ RSpec.shared_examples "a peer" do |compression_value|
 
   def dispatch_config
     compr = compression
-    dispatch_frame Arf::Wire::ConfigurationFrame do |fr|
+    dispatch_frame Arf::Wire::HelloFrame do |fr|
       case compr
       when :gzip
         fr.compression_gzip!
@@ -15,7 +15,7 @@ RSpec.shared_examples "a peer" do |compression_value|
 
   def assert_config_response
     compr = compression
-    expect(subject).to send_frame(Arf::Wire::ConfigurationFrame) do |fr|
+    expect(subject).to send_frame(Arf::Wire::HelloFrame) do |fr|
       expect(fr).to be_ack
       case compr
       when :gzip

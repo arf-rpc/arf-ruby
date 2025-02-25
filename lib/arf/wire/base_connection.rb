@@ -16,8 +16,8 @@ module Arf
         @streams = {}
         @streams_monitor = Monitor.new
 
-        @configuration_ready_lock = Mutex.new
-        @configuration_ready_signal = Thread::ConditionVariable.new
+        @hello_ready_lock = Mutex.new
+        @hello_ready_signal = Thread::ConditionVariable.new
         @registered = false
       end
 
@@ -30,12 +30,12 @@ module Arf
         end
       end
 
-      def wait_configuration
+      def wait_hello
         return if @configured
 
         loop do
-          @configuration_ready_lock.synchronize do
-            @configuration_ready_signal.wait(@configuration_ready_lock)
+          @hello_ready_lock.synchronize do
+            @hello_ready_signal.wait(@hello_ready_lock)
             return if @configured
           end
         end
@@ -53,8 +53,8 @@ module Arf
       def handle_frame(raw_frame)
         frame = raw_frame.specialize(@compression)
         case frame
-        when ConfigurationFrame
-          handle_configuration(frame)
+        when HelloFrame
+          handle_hello(frame)
         when PingFrame
           handle_ping(frame)
         when GoAwayFrame
@@ -83,7 +83,7 @@ module Arf
       end
 
       def ping
-        wait_configuration
+        wait_hello
         @streams_monitor.synchronize do
           dispatch_frame(PingFrame) do |p|
             p.payload = SecureRandom.bytes(8)

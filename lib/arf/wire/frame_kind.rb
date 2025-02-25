@@ -2,7 +2,7 @@
 
 module Arf
   module Wire
-    FRAME_KIND_CONFIGURATION  = 0x0
+    FRAME_KIND_HELLO  = 0x0
     FRAME_KIND_PING           = 0x1
     FRAME_KIND_GO_AWAY        = 0x2
     FRAME_KIND_MAKE_STREAM    = 0x3
@@ -10,7 +10,7 @@ module Arf
     FRAME_KIND_DATA           = 0x5
 
     FRAME_TO_SYMBOL = {
-      FRAME_KIND_CONFIGURATION => :configuration,
+      FRAME_KIND_HELLO => :hello,
       FRAME_KIND_PING => :ping,
       FRAME_KIND_GO_AWAY => :go_away,
       FRAME_KIND_MAKE_STREAM => :make_stream,

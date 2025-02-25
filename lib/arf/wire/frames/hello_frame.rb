@@ -2,15 +2,15 @@
 
 module Arf
   module Wire
-    class ConfigurationFrame < BaseFrame
-      frame_kind :configuration
+    class HelloFrame < BaseFrame
+      frame_kind :hello
       define_flag :ack, 0
       define_flag :compression_gzip, 1
       attr_accessor :max_concurrent_streams
 
       def from_frame(frame)
         if !frame.empty? && frame.length != 4
-          raise InvalidFrameLengthError, "invalid length for frame CONFIGURATION " \
+          raise InvalidFrameLengthError, "invalid length for frame HELLO " \
                                          "expected 0 or 4 bytes, got #{frame.length}"
         end
 
@@ -18,7 +18,7 @@ module Arf
 
         return unless @max_concurrent_streams && @max_concurrent_streams != 0 && !ack?
 
-        raise InvalidFrameError, "received non-ack CONFIGURATION with " \
+        raise InvalidFrameError, "received non-ack HELLO with " \
                                  "non-zero max_concurrent_streams"
       end
 

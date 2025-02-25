@@ -11,7 +11,7 @@ RSpec.describe Arf::Wire::Server::Peer do
     allow(server).to receive(:register_peer)
   end
 
-  context "without configuration" do
+  context "without hello" do
     it "responds data frames with GOAWAY" do
       expect(subject).to send_frame(Arf::Wire::GoAwayFrame) do |fr|
         expect(fr.error_code).to eq Arf::Wire::ERROR_CODE_PROTOCOL_ERROR
@@ -45,7 +45,7 @@ RSpec.describe Arf::Wire::Server::Peer do
         ].pack("C*")
       end
       f = fr.to_frame
-      f.frame_kind = :configuration
+      f.frame_kind = :hello
 
       expect(subject).to send_frame(Arf::Wire::GoAwayFrame) do |frame|
         expect(frame.error_code).to eq Arf::Wire::ERROR_CODE_PROTOCOL_ERROR
@@ -56,7 +56,7 @@ RSpec.describe Arf::Wire::Server::Peer do
     end
   end
 
-  context "with configuration" do
+  context "with hello" do
     context "without compression" do
       it_behaves_like "a peer"
     end

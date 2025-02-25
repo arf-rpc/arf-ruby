@@ -4,7 +4,7 @@ module Arf
   module Wire
     class Client < BaseConnection
       def post_init
-        dispatch_frame(ConfigurationFrame) do |fr|
+        dispatch_frame(HelloFrame) do |fr|
           compression = Arf.config.client_compression
           case compression
           when :gzip
@@ -48,12 +48,12 @@ module Arf
         str.handle_reset_stream(fr)
       end
 
-      def handle_configuration(fr)
+      def handle_hello(fr)
         return protocol_error! if !fr.ack? || @configured
 
         @configured = true
-        @configuration_ready_lock.synchronize do
-          @configuration_ready_signal.broadcast
+        @hello_ready_lock.synchronize do
+          @hello_ready_signal.broadcast
         end
       end
 
@@ -67,7 +67,7 @@ module Arf
       end
 
       def new_stream
-        wait_configuration
+        wait_hello
         id = nil
         @streams_monitor.synchronize do
           @last_stream_id += 1
@@ -89,7 +89,7 @@ module Arf
       end
 
       def close
-        wait_configuration
+        wait_hello
         @streams_monitor.synchronize do
           close_connection
         end

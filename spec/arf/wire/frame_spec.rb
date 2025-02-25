@@ -8,7 +8,7 @@ RSpec.describe Arf::Wire::Frame do
     decoded = described_class.from_io(data)
     expect(decoded.stream_id).to be_zero
     expect(decoded.flags).to be_zero
-    expect(decoded.frame_kind).to eq :configuration
+    expect(decoded.frame_kind).to eq :hello
     expect(decoded.length).to be_zero
     expect(decoded.payload).to be_nil
   end
@@ -20,7 +20,7 @@ RSpec.describe Arf::Wire::Frame do
     decoded = described_class.from_io(data)
     expect(decoded.stream_id).to be_zero
     expect(decoded.flags).to eq 0x04
-    expect(decoded.frame_kind).to eq :configuration
+    expect(decoded.frame_kind).to eq :hello
     expect(decoded.length).to eq 4
     expect(decoded.payload.string).to eq "\x00\x00\x00\x00"
   end
